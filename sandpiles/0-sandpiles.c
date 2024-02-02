@@ -1,15 +1,14 @@
 #include "sandpiles.h"
 
 /**
- * sandpiles_sum - calcule la somme de deux tas de sable
- * @grid1: premier tas de sable
- * @grid2: deuxième tas de sable
+ * sandpiles_sum - computes the sum of two sandpiles
+ * @grid1: first grid
+ * @grid2: second grid
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	int i, j;
 
-	// Ajoute les valeurs des deux tas de sable
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
@@ -17,8 +16,6 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 			grid1[i][j] += grid2[i][j];
 		}
 	}
-
-	// Tant que le tas de sable n'est pas stable, le renverse et l'affiche
 	while (!is_stable(grid1))
 	{
 		printf("=\n");
@@ -28,8 +25,9 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 }
 
 /**
- * print_grid - Affiche un tas de sable 3x3
- * @grid: Tas de sable 3x3
+ * print_grid - Print 3x3 grid
+ * @grid: 3x3 grid
+ *
  */
 static void print_grid(int grid[3][3])
 {
@@ -48,9 +46,9 @@ static void print_grid(int grid[3][3])
 }
 
 /**
- * is_stable - Vérifie si le tas de sable est stable
- * @grid: Tas de sable à vérifier
- * Return: 1 si stable, 0 sinon
+ * is_stable - check if the sandpile is stable
+ * @grid: sandpile to check
+ * Return: 1 if stable, 0 otherwise
  */
 int is_stable(int grid[3][3])
 {
@@ -68,8 +66,8 @@ int is_stable(int grid[3][3])
 }
 
 /**
- * topple - Renverse le tas de sable
- * @grid: Tas de sable à renverser
+ * topple - topple the sandpile
+ * @grid: sandpile to topple
  */
 void topple(int grid[3][3])
 {
@@ -97,9 +95,9 @@ void topple(int grid[3][3])
 }
 
 /**
- * add_grids - Ajoute deux tas de sable
- * @grid1: premier tas de sable
- * @grid2: deuxième tas de sable
+ * add_grids - add two grids
+ * @grid1: first grid
+ * @grid2: second grid
  */
 void add_grids(int grid1[3][3], int grid2[3][3])
 {
