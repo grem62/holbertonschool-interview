@@ -1,32 +1,35 @@
 #!/usr/bin/python3
-"""_summary_
-"""
-
 import sys
 
-status_codes = {"200": 0, "301": 0, "400": 0,
-                "401": 0, "403": 0,
-                "404": 0, "405": 0, "500": 0}
-file_size = 0
-counter = 0
 
+"""Script to get stats from a request"""
+codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+size = 0
+counter = 0
+status = {k: 0 for k in codes}
 try:
     for line in sys.stdin:
         counter += 1
         data = line.split()
-        try:
-            file_size += int(data[-1])
-        except:
-            pass
-        try:
-            status_codes[data[-2]] += 1
-        except:
-            pass
+        if len(data) > 2:
+            if data[-2] in status:
+                status[data[-2]] += 1
+            size += int(data[-1])
         if counter == 10:
-            print("File size: {}".format(file_size))
-            for key, value in status_codes.items():
-                if value != 0:
-                    print("{}: {}".format(key, value))
+            print("File size: {}".format(size))
+            for k, v in sorted(status.items()):
+                if v:
+                    print("{}: {}".format(k, v))
             counter = 0
+            size = 0
+            status = {k: 0 for k in codes}
 except KeyboardInterrupt:
-    pass
+    print("File size: {}".format(size))
+    for k, v in sorted(status.items()):
+        if v:
+            print("{}: {}".format(k, v))
+    counter = 0
+    size = 0
+    status = {k: 0 for k in codes}
+    raise
+print("File size: {}".format(size))
