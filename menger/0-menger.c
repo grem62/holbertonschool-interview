@@ -1,40 +1,34 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "menger.h"
 
 /**
- * menger - Prints a Menger sponge of a given level.
- *
- * @level: The level of the Menger sponge to print.
+ * menger - function that draws a 2D Menger Sponge
+ * @level: is the level of the Menger Sponge to draw
  */
 void menger(int level)
 {
-	int i, j, size, x, y; /* Declare variables i, j, size, x, y */
-	char c; /* Declare character variable c */
+	int i, j, size, x, y;
+	char c;
 
-	if (level < 0) /* Check if level is less than 0 */
-		return; /* Exit the function if level is less than 0 */
+	if (level < 0)
+		return;
 
-	size = 1 << level; /* Calculate the size of the Menger based on the level */
-	for (i = 0; i < size; i++) /* Loop through rows */
+	size = pow(3, level);
+	for (i = 0; i < size; i++)
 	{
-		for (j = 0; j < size; j++) /* Loop through columns */
+		for (j = 0; j < size; j++)
 		{
-			x = i; /* Set x to the current row */
-			y = j; /* Set y to the current column */
-			c = '#'; /* Set c to '#' by default */
-
-			while (x > 0 || y > 0) /* Loop until both x and y are 0 */
+			x = i;
+			y = j;
+			c = '#';
+			while (x > 0 || y > 0)
 			{
-				if (x % 3 == 1 && y % 3 == 1) /* Check if x and y are both 1 */
-					c = ' '; /* Set c to ' ' if x and y satisfy the condition */
-
-				x /= 3; /* Divide x by 3 */
-				y /= 3; /* Divide y by 3 */
+				if (x % 3 == 1 && y % 3 == 1)
+					c = ' ';
+				x = x / 3;
+				y = y / 3;
 			}
-			printf("%c", c); /* Print the character c */
+			printf("%c", c);
 		}
-		printf("\n"); /* Print a new line */
+		printf("\n");
 	}
 }
-
-
