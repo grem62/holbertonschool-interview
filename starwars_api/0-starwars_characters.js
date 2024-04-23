@@ -1,42 +1,21 @@
 #!/usr/bin/node
 
+// Import the request module
 const request = require('request');
+const URL = `https://swapi-api.hbtn.io/api/films/${process.argv[2]}/`;
 
-function getMovieCharacters(movieId) {
-    const url = `https://swapi.dev/api/films/${movieId}/`;
-
-    request.get(url, (error, response, body) => {
-        if (error) {
-            console.error(`Failed to retrieve movie data for movie ID ${movieId}`);
-            return;
-        }
-
-        if (response.statusCode !== 200) {
-            console.error(`Failed to retrieve movie data for movie ID ${movieId}. Status code: ${response.statusCode}`);
-            return;
-        }
-
-        const data = JSON.parse(body);
-        const charactersUrls = data.characters;
-
-        charactersUrls.forEach(characterUrl => {
-            request.get(characterUrl, (error, response, body) => {
-                if (error) {
-                    console.error(`Failed to retrieve character data for ${characterUrl}`);
-                    return;
-                }
-
-                if (response.statusCode !== 200) {
-                    console.error(`Failed to retrieve character data for ${characterUrl}. Status code: ${response.statusCode}`);
-                    return;
-                }
-
-                const characterData = JSON.parse(body);
-                console.log(characterData.name);
-            });
-        });
-    });
+async function getCharacterName (url) {
+  return new Promise((resolve, reject) => {
+    request(url, (_err, _res, body) => { resolve(JSON.parse(body).name); });
+  });
 }
 
-const movieId = process.argv[2];
-getMovieCharacters(movieId);
+async function printCharacters (_error, _response, body) {
+  for (const url of JSON.parse(body).characters) {
+    const characterName = await getCharacterName(url);
+
+    console.log(characterName);
+  }
+}
+
+request(URL, printCharacters);
