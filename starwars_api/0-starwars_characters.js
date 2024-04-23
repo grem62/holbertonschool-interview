@@ -1,4 +1,4 @@
-#!/bin/env node
+#!/usr/bin/node
 
 const request = require('request');
 
