@@ -1,3 +1,5 @@
+#!/bin/env node
+
 const request = require('request');
 
 function getMovieCharacters(movieId) {
