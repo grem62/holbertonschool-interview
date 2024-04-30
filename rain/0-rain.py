@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+"""_summary_
+"""
 
 
 def rain(walls):
@@ -26,20 +28,3 @@ def rain(walls):
         water += min(left[i], right[i]) - walls[i]
 
     return water
-
-
-
-
-
-
-   
-    
-
-
-rain = __import__('0-rain').rain
-
-if __name__ == "__main__":
-    walls = [0, 1, 0, 2, 0, 3, 0, 4]
-    print(rain(walls))
-    walls = [2, 0, 0, 4, 0, 0, 1, 0]
-    print(rain(walls))
