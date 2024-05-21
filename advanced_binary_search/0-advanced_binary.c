@@ -2,21 +2,6 @@
 #include <stdio.h> /* Assurez-vous d'inclure stdio.h pour printf */
 
 
-/*
- * Fonction : advanced_binary
- * Description : Cette fonction effectue une recherche
- * binaire avancée dans un tableau trié à la recherche
- * d'une valeur spécifique.
- * Paramètres :
- *   - array : Un pointeur vers le début du tableau
- * d'entiers dans lequel la recherche doit être effectuée.
- *   - size : La taille du tableau.
- *   - value : La valeur entière à rechercher dans le tableau.
- * Retour :
- *   - L'indice de l'élément recherché dans le tableau
- * si celui-ci est trouvé.
- *   - -1 si l'élément n'est pas trouvé dans le tableau.
- */
 int advanced_binary(int *array, size_t size, int value)
 /**
  * La fonction prend trois paramètres :
@@ -58,7 +43,8 @@ int advanced_binary(int *array, size_t size, int value)
 	{
 		int result = advanced_binary(array + mid + 1, size - mid - 1, value);
 		/**
-		 * Si la valeur n'est pas trouvée dans la moitié droite du tableau,
+		 * Si la valeur n'est pas trouvée 
+		 * dans la moitié droite du tableau,
 		 * la fonction renvoie -1.
 		*/
 
