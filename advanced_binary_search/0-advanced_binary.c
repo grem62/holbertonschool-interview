@@ -1,17 +1,20 @@
 #include "search_algos.h"
-#include <stdio.h> // Assurez-vous d'inclure stdio.h pour printf
+#include <stdio.h> /* Assurez-vous d'inclure stdio.h pour printf */
 
 int advanced_binary(int *array, size_t size, int value)
 {
+    int mid;
+    int mid_value;
+    size_t i;
+
     if (array == NULL || size == 0)
         return -1;
 
-    int mid = (size - 1) / 2;
-    int mid_value = array[mid];
-    size_t i; // Déclaration de la variable de boucle en dehors du code
+    mid = (size - 1) / 2;
+    mid_value = array[mid];
 
     printf("Searching in array: ");
-    for (i = 0; i < size; i++) // Utilisation de la variable de boucle déclarée en dehors
+    for (i = 0; i < size; i++)
     {
         printf("%d", array[i]);
         if (i != size - 1)
