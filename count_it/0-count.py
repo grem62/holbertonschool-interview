@@ -1,49 +1,40 @@
 #!/usr/bin/python3
-"""_summary_
-    """
+"""module - count_words
+"""
 
-
+import re
 import requests
 
 
-def count_words(subreddit, word_list, after=None, word_count={}):
-    """_summary_
+def count_words(subreddit, word_list):
+    """Count the number of times a word appears in the titles of hot posts
 
     Args:
-        subreddit (_type_): _description_
-        word_list (_type_): _description_
-        after (_type_, optional): _description_. Defaults to None.
-        word_count (dict, optional): _description_. Defaults to {}.
-    """
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    url = f'https://www.reddit.com/r/{subreddit}/hot.json'
-    params = {'after': after, 'limit': 100}
+        subreddit : subreddit to search
+        word_list : list of words to count
 
-    response = requests.get(url, headers=headers,
-                            params=params, allow_redirects=False)
+    Returns:
+        None
+    """
+
+    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
+    headers = \
+        {'User-Agent': 'Python/requests:APIproject:0.0.1 (by /u/veeteeran)'}
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
     if response.status_code != 200:
-        return
+        return None
 
-    data = response.json().get('data')
-    children = data.get('children')
+    hot_posts = response.json().get('data').get('children')
+    hot_titles = [post.get('data').get('title') for post in hot_posts]
 
-    for child in children:
-        title = child.get('data').get('title').lower()
-        for word in word_list:
-            word_lower = word.lower()
-            count = title.split().count(word_lower)
-            if count > 0:
-                if word_lower in word_count:
-                    word_count[word_lower] += count
-                else:
-                    word_count[word_lower] = count
+    word_count = {}
+    for word in word_list:
+        word_count[word] = 0
+        for title in hot_titles:
+            word_count[word] += len(re.findall(
+                r'\b{}\b'.format(word), title, re.IGNORECASE))
 
-    after = data.get('after')
-    if after is not None:
-        count_words(subreddit, word_list, after, word_count)
-    else:
-        sorted_word_count = sorted(word_count.items(),
-                                   key=lambda item: (-item[1], item[0]))
-        for word, count in sorted_word_count:
-            print(f"{word}: {count}")
+    for word in sorted(word_list, key=lambda x: (-word_count[x], x)):
+        if word_count[word] > 0:
+            print('{}: {}'.format(word.lower(), word_count[word]))
