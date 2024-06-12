@@ -5,12 +5,13 @@
 
 def rotate_2d_matrix(matrix):
     """_summary_
-
-    Args:
-        matrix (_type_): _description_
     """
-    matrix_copy = matrix.copy()
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            matrix[i][j] = matrix_copy[len(matrix[i])-1-j][i]
+    n = len(matrix)
+    for i in range(n // 2):
+        for j in range(i, n - i - 1):
+            temp = matrix[i][j]
+            matrix[i][j] = matrix[n - 1 - j][i]
+            matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j]
+            matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i]
+            matrix[j][n - 1 - i] = temp
     return matrix
