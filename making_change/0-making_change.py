@@ -4,10 +4,22 @@
 """
 
 def makeChange(coins, total):
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
-    for i in range(1, total + 1):
+    memo = {}
+
+    def dp(n):
+        if n in memo:
+            return memo[n]
+        if n == 0:
+            return 0
+        if n < 0:
+            return float('inf')
+        min_count = float('inf')
         for coin in coins:
-            if i >= coin:
-                dp[i] = min(dp[i], dp[i - coin] + 1)
-    return dp[total] if dp[total] != float('inf') else -1
+            count = dp(n - coin)
+            if count != float('inf'):
+                min_count = min(min_count, count + 1)
+        memo[n] = min_count
+        return min_count
+
+    result = dp(total)
+    return result if result != float('inf') else -1
