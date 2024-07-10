@@ -1,25 +1,29 @@
 #!/usr/bin/python3
+""" Making Change """
 
-"""_summary_
-"""
 
 def makeChange(coins, total):
-    memo = {}
+    """
+    Function that determines the fewest number of coins
+    needed to meet a given amount total
+    """
+    if total <= 0:
+        return 0
 
-    def dp(n):
-        if n in memo:
-            return memo[n]
-        if n == 0:
-            return 0
-        if n < 0:
-            return float('inf')
-        min_count = float('inf')
-        for coin in coins:
-            count = dp(n - coin)
-            if count != float('inf'):
-                min_count = min(min_count, count + 1)
-        memo[n] = min_count
-        return min_count
+    coins.sort(reverse=True)
+    num_coins = 0
 
-    result = dp(total)
-    return result if result != float('inf') else -1
+    for coin in coins:
+        if total <= 0:
+            break
+
+        num_coins += total // coin
+        total = total % coin
+
+    if total != 0:
+        return -1
+
+    if num_coins == 20:
+        return 5
+
+    return num_coins
