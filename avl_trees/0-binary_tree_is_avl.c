@@ -13,18 +13,18 @@ int height(const binary_tree_t *tree);
  */
 int binary_tree_is_avl(const binary_tree_t *tree)
 {
-    if (tree == NULL)
-        return (0);
+	if (tree == NULL)
+		return (0);
 
-    /* Check if tree is a valid BST */
-    if (!is_bst(tree, INT_MIN, INT_MAX))
-        return (0);
+	/* Check if tree is a valid BST */
+	if (!is_bst(tree, INT_MIN, INT_MAX))
+		return (0);
 
-    /* Check if tree is a valid AVL Tree */
-    if (!is_avl(tree))
-        return (0);
+	/* Check if tree is a valid AVL Tree */
+	if (!is_avl(tree))
+		return (0);
 
-    return (1);
+	return (1);
 }
 
 /**
@@ -37,14 +37,14 @@ int binary_tree_is_avl(const binary_tree_t *tree)
  */
 int is_bst(const binary_tree_t *tree, int min, int max)
 {
-    if (tree == NULL)
-        return (1);
+	if (tree == NULL)
+		return (1);
 
-    if (tree->n < min || tree->n > max)
-        return (0);
+	if (tree->n < min || tree->n > max)
+		return (0);
 
-    return (is_bst(tree->left, min, tree->n - 1) &&
-            is_bst(tree->right, tree->n + 1, max));
+	return (is_bst(tree->left, min, tree->n - 1) &&
+		is_bst(tree->right, tree->n + 1, max));
 }
 
 /**
@@ -55,19 +55,19 @@ int is_bst(const binary_tree_t *tree, int min, int max)
  */
 int is_avl(const binary_tree_t *tree)
 {
-    int left_height, right_height, diff;
+	int left_height, right_height, diff;
 
-    if (tree == NULL)
-        return (1);
+	if (tree == NULL)
+		return (1);
 
-    left_height = height(tree->left);
-    right_height = height(tree->right);
-    diff = left_height - right_height;
+	left_height = height(tree->left);
+	right_height = height(tree->right);
+	diff = left_height - right_height;
 
-    if (diff > 1 || diff < -1)
-        return (0);
+	if (diff > 1 || diff < -1)
+		return (0);
 
-    return (is_avl(tree->left) && is_avl(tree->right));
+	return (is_avl(tree->left) && is_avl(tree->right));
 }
 
 /**
@@ -78,13 +78,13 @@ int is_avl(const binary_tree_t *tree)
  */
 int height(const binary_tree_t *tree)
 {
-    int left_height, right_height;
+	int left_height, right_height;
 
-    if (tree == NULL)
-        return (0);
+	if (tree == NULL)
+		return (0);
 
-    left_height = height(tree->left);
-    right_height = height(tree->right);
+	left_height = height(tree->left);
+	right_height = height(tree->right);
 
-    return (1 + (left_height > right_height ? left_height : right_height));
+	return (1 + (left_height > right_height ? left_height : right_height));
 }
