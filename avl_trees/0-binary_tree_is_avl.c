@@ -1,11 +1,11 @@
 #include "binary_trees.h"
-#include "binary_tree_is_bts.c"
+
 /**
  * height - measures the height of a binary tree
  * @tree: pointer to the node
  * Return: height
  **/
-int height(binary_tree_t *tree)
+int height(const binary_tree_t *tree)
 {
 	int left, right;
 
@@ -20,6 +20,7 @@ int height(binary_tree_t *tree)
 	else
 		return (right);
 }
+
 /**
  * binary_tree_balance - measures the balance factor of a binary tree
  * @tree: pointer to the node (use height)
@@ -37,15 +38,16 @@ int binary_tree_balance(const binary_tree_t *tree)
 	hright = height(tree->right);
 	return (hleft - hright);
 }
+
 /**
  * preorder_balance - goes through a binary tree using pre-order traversal
- * @f: pointer to function that chacks balance
  * @t: pointer to the root tree
- * Return: balanced 1 , unbalanced 0
+ * @f: pointer to function that checks balance
+ * Return: balanced 1, unbalanced 0
  **/
 int preorder_balance(const binary_tree_t *t, int (*f)(const binary_tree_t *))
 {
-	int balance_r, balance_l;
+	int balance_r = 1, balance_l = 1;
 
 	if (!t || (t->left == NULL && t->right == NULL))
 		return (1);
@@ -55,12 +57,13 @@ int preorder_balance(const binary_tree_t *t, int (*f)(const binary_tree_t *))
 		balance_r = preorder_balance(t->left, f);
 	if (t->right)
 		balance_l = preorder_balance(t->right, f);
-	return (balance_r & balance_l);
+	return (balance_r && balance_l);
 }
+
 /**
  * binary_tree_is_avl - Determine if tree is AVL
  * @tree: pointer to the root
- * Return: 1 if tree is AVL / 0 otherwise
+ * Return: 1 if tree is AVL, 0 otherwise
  **/
 int binary_tree_is_avl(const binary_tree_t *tree)
 {
